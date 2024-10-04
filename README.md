@@ -6,7 +6,7 @@ Welcome to the **Koshi Translator**, an official translation tool for the micron
 [![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/linuxfandudeguy/koshland-translator)
 [![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/linuxfandudeguy/koshland-translator)
 [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/linuxfandudeguy/koshland-translator)
-![vercel](https://github.com/user-attachments/assets/3013dc78-dcf5-469b-9cdc-59ed79204223)
+[![Vercel](https://github.com/user-attachments/assets/3013dc78-dcf5-469b-9cdc-59ed79204223)](https://vercel.com/new/git/external?repository-url=https://github.com/linuxfandudeguy/koshland-translator/)
 ## 🚀 Project Structure
 
 The Koshi Translator project is structured as follows:
