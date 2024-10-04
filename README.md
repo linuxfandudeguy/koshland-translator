@@ -44,7 +44,7 @@ The Koshi Translator project is structured as follows:
 ```
 
 - **`src/pages/`** contains `.astro` files representing the main translation pages.
-- **`src/components/`** includes reusable components to enhance the translation interface.
+- **`src/components/`** includes reusable components to enhance the translation interface. (not used)
 - **`public/`** stores static assets such as logos, icons, or images for the site.
 
 ## 🧞 Commands
