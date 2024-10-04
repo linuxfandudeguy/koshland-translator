@@ -49,16 +49,16 @@ The Koshi Translator project is structured as follows:
 
 ## 🧞 Commands
 
-To run and manage the Koshi Translator, use the following commands from the root of the project:
+To run and manage the Koshi Translator locally, use the following commands from the root of the project:
 
 | Command                   | Action                                           |
 | :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs project dependencies                    |
-| `npm run dev`             | Starts the local development server (`localhost:4321`) |
-| `npm run build`           | Builds the production-ready site in `./dist/`    |
-| `npm run preview`         | Previews your build locally                      |
-| `npm run astro ...`       | Run Astro CLI commands                           |
-| `npm run astro -- --help` | Get help with the Astro CLI                      |
+| `pnpm install`             | Installs project dependencies                    |
+| `pnpm run dev`             | Starts the local development server (`localhost:4321`) |
+| `pnpm run build`           | Builds the production-ready site in `./dist/`    |
+| `pnpm run preview`         | Previews your build locally                      |
+| `pnpm run astro ...`       | Run Astro CLI commands                           |
+| `pnpm run astro -- --help` | Get help with the Astro CLI                      |
 
 ## 🌐 About Koshi Translator
 
@@ -67,7 +67,3 @@ The **Koshi Translator** is an integral tool for the Koshland micronation, aimed
 ## 👀 Learn More
 
 For more information, check out [Astro's documentation](https://docs.astro.build) or join the wider [Astro community](https://astro.build/chat) to learn more about the framework powering this tool.
-
----
-
-This version of the README emphasizes the project's purpose and its importance to the micronation of Koshland while maintaining a technical overview of the Astro-based project.
