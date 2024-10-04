@@ -62,7 +62,7 @@ To run and manage the Koshi Translator locally, use the following commands from 
 ## 🌐 About Koshi Translator
 
 The **Koshi Translator** is an integral tool for the Koshland micronation, aimed at facilitating translation between languages used by the community. Whether you're a citizen or a visitor, this translator ensures effective communication.
-> **Fun fact**: The development folder for this project went by the name of `**growing-gamma**`
+> **Fun fact**: The development folder for this project went by the name of **`growing-gamma`**
 ## 👀 Learn More
 
 For more information, check out [Astro's documentation](https://docs.astro.build) or join the wider [Astro community](https://astro.build/chat) to learn more about the framework powering this tool.
