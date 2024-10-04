@@ -40,7 +40,7 @@ The Koshi Translator project is structured as follows:
 │   │   ├── Layout.astro           # A layout file that likely wraps around individual pages to provide a consistent look. 
 │   ├── pages                      # A directory containing the web pages of the project.
 │   │   ├── index.astro            # The main landing page of the website. # Might be familiar as the homepage.
-├── tsconfig.json                  # A configuration file for TypeScript that helps set rules for the code and how it should be compiled. (not used
+├── tsconfig.json                  # A configuration file for TypeScript that helps set rules for the code and how it should be compiled. (not used)
 ```
 
 - **`src/pages/`** contains `.astro` files representing the main translation pages.
