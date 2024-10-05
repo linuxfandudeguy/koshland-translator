@@ -30,7 +30,7 @@ The Koshi Translator project is structured as follows:
 │   │   │   ├── bootstrap.min.js     # A minimized version of the Bootstrap JavaScript, optimized for performance. # Similar to CSS minification.
 │   │   │   ├── ...                # Additional JavaScript files for various functionalities.
 │   ├── favicon.svg                # A small image that represents the website in the browser tab.
-│   ├── init.min.js                # A minimized JavaScript file that likely initializes some features of the site. # Minimized for performance.
+│   ├── init.bundle.min.js          # A minimized JavaScript file that likely initializes some features of the site. # Minimized for performance.
 ├── src                            # A folder that contains the source code for the project.
 │   ├── components                 # A directory for reusable pieces of the web application, such as buttons or cards.
 │   │   ├── Card.astro             # A component file for creating a card element in the web app.
