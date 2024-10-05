@@ -66,3 +66,5 @@ The **Koshi Translator** is an integral tool for the Koshland micronation, aimed
 ## 👀 Learn More
 
 For more information, check out [Astro's documentation](https://docs.astro.build) or join the wider [Astro community](https://astro.build/chat) to learn more about the framework powering this tool.
+
+licenced under mit
