@@ -9,7 +9,30 @@ title: 'Koshi Translator'
   <title>Koshi Translator</title>
   <!-- Local Bootstrap 5.3.3 CSS -->
   <link rel="stylesheet" href="/bootstrap-5.3.3-dist/css/bootstrap.min.css">
-
+  <style>
+    body {
+      background-color: #f8f9fa; /* Light background */
+    }
+    .container {
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      padding: 20px;
+      background-color: white;
+    }
+    h1 {
+      color: #007bff; /* Bootstrap primary color */
+    }
+    #translationResult {
+      border: 1px solid #ced4da;
+      border-radius: 4px;
+      padding: 10px;
+      background-color: #e9ecef; /* Light gray */
+    }
+    #loading {
+      display: none;
+      text-align: center;
+    }
+  </style>
 </head>
 <body>
   <div class="container">
@@ -19,7 +42,7 @@ title: 'Koshi Translator'
         <form id="translationForm">
           <div class="form-group">
             <label for="inputText">Enter Text to Translate:</label>
-            <input type="text" class="form-control" id="inputText" name="inputText" placeholder="Enter text to translate" />
+            <input type="text" class="form-control" id="inputText" name="inputText" placeholder="Enter text to translate" required />
           </div>
           <div class="form-group">
             <label for="translationDirection">Translation Direction:</label>
@@ -30,17 +53,25 @@ title: 'Koshi Translator'
           </div>
           <button type="button" class="btn btn-primary mt-3" id="translateBtn">Translate</button>
         </form>
+        <div id="loading">
+          <div class="spinner-border" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+          <p>Translating...</p>
+        </div>
         <div id="translationResult" class="mt-3"></div>
       </div>
     </div>
   </div>
 
+ 
+
   <!-- Local Bootstrap 5.3.3 JS -->
-  <script src="/bootstrap-5.3.3-dist/js/bootstrap.min.js" is:inline></script>
-  <!-- initial script -->
-  <script src="/init.bundle.min.js" is:inline></script>
-  <!-- polyfills -->
-  <script src="/polyfills.min.js" is:inline></script>
-  <script src="/polyfills-c67a75d1b6f99dc8.js" is:inline></script>
+  <script type="text/javascript" src="/bootstrap-5.3.3-dist/js/bootstrap.min.js" is:inline></script>
+  <!-- Initial script -->
+  <script type="text/javascript" src="/init.bundle.min.js" is:inline></script>
+  <!-- Polyfills -->
+  <script type="text/javascript" src="/polyfills.min.js" is:inline></script>
+  <script type="text/javascript" src="/polyfills-c67a75d1b6f99dc8.js" is:inline></script>
 </body>
 </html>
