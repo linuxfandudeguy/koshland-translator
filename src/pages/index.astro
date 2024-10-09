@@ -8,12 +8,12 @@ title: 'Koshi Translator'
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Translate English into Koshi with our intuitive translator.">
   <meta name="keywords" content="Koshi, micronation, translation, Koshland, astro">
-   <meta name="author" content="linuxfandudeguy">
-   <meta name="generator" content="Astro 4.15.11">
-   <meta name="theme-color" content="#ffffff">
+  <meta name="author" content="linuxfandudeguy">
+  <meta name="generator" content="Astro 4.15.11">
+  <meta name="theme-color" content="#ffffff">
   <title>Koshi Translator</title>
-  <!-- Local Bootstrap 5.3.3 CSS -->
-  <link rel="stylesheet" href="/bootstrap-5.3.3-dist/css/esbuild/bundled/bootstrap.bundle.min.css">
+  <!-- Local Bootstrap 5.3.3 CSS with cache-busting -->
+  <link rel="stylesheet" href={`/bootstrap-5.3.3-dist/css/esbuild/bundled/bootstrap.bundle.min.css?t=${Date.now()}`} />
   <style>
     body {
       background-color: white; /* Set background color to white */
@@ -44,7 +44,7 @@ title: 'Koshi Translator'
     </div>
   </div>
 
-  <!-- Initial script -->
-  <script type="text/javascript" src="/webpack/js/init/init.bundle.min.js" defer></script>
+  <!-- Initial script with cache-busting -->
+  <script type="text/javascript" src={`/webpack/js/init/init.bundle.min.js?t=${Date.now()}`} defer></script>
 </body>
 </html>
