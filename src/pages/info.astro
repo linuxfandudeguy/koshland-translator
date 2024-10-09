@@ -30,15 +30,26 @@ title: 'Koshi Translator - Information'
     a:hover {
       text-decoration: underline;
     }
+    ul {
+      list-style-type: none; /* Remove bullets from the list */
+      padding: 0; /* Remove padding */
+    }
+    li {
+      margin-bottom: 10px; /* Add spacing between list items */
+    }
+    .tribute {
+      font-weight: bold; /* Make the tribute bold */
+      color: #ff5722; /* Distinct color for tribute */
+    }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1 class="text-center">Koshi Translator</h1>
-    <h2>Why This Website Exists</h2>
+    <h1 class="text-center font-weight-bold">Koshi Translator</h1>
+    <h2 class="font-weight-bold">Why This Website Exists</h2>
     <p>The Koshi Translator aims to bridge the gap between English and the Koshi dialect, allowing users to easily translate text and promote the unique culture of the Koshi micronation.</p>
     
-    <h2>Frameworks and Tools Used</h2>
+    <h2 class="font-weight-bold">Frameworks and Tools Used</h2>
     <ul>
       <li><strong>Astro</strong>: A modern static site generator created by <a href="https://github.com/fredschott" target="_blank">Fred K. Schott</a>.</li>
       <li><strong>Bootstrap</strong>: A popular CSS framework developed by <a href="https://github.com/mdo" target="_blank">Mark Otto</a>.</li>
@@ -49,7 +60,8 @@ title: 'Koshi Translator - Information'
       <li><strong>JavaScript Polyfills</strong>: Provided by <a href="https://github.com/zloirock" target="_blank">Denis Pushkarev</a>.</li>
     </ul>
 
-    <h2>Credits</h2>
+    <h2 class="font-weight-bold">Credits</h2>
+    <p>The credits for the JavaScript file can be found at <code>/webpack/js/init/init.bundle.min.js.LICENSE.txt</code>.</p>
     <ul>
       <li>Denis Pushkarev: For providing JavaScript polyfills.</li>
       <li>Mark Otto: For Bootstrap CSS and JavaScript.</li>
@@ -59,7 +71,15 @@ title: 'Koshi Translator - Information'
       <li>Zoltan Kochan: For pnpm.</li>
       <li>Tobias Koppers: For Webpack.</li>
       <li>Evan Wallace: For esbuild.</li>
+      <li><strong>Linus Torvalds</strong>: Creator of <a href="https://github.com/torvalds" target="_blank">Git</a>.</li>
+      <li><strong>Tom Preston-Werner</strong>: Former co-founder of <a href="https://github.com/mojombo" target="_blank">GitHub</a>.</li>
+      <li class="tribute">
+        <strong>Ian Murdock (1973 - 2015)</strong>: Creator of <a href="https://www.debian.org/" target="_blank">Debian</a>. His contributions to open-source software will always be remembered. Rest in peace.
+      </li>
+      <li><strong>Chris Allegretta</strong>: Creator of <a href="https://www.nano-editor.org/" target="_blank">GNU Nano</a>.</li>
     </ul>
   </div>
-  <script type="text/javascript" src={`/bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js?t=${Date.now()}`} defer></script></body>
+  
+  <script type="text/javascript" src={`/bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js?t=${Date.now()}`} defer></script>
+</body>
 </html>
