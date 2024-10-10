@@ -5,14 +5,17 @@ import path from 'path';
 // Define the root directory of your repository
 const rootDir = path.resolve('.');
 
-// Function to get all files recursively from the root directory
+// Function to get all files recursively from the root directory, excluding node_modules and .git
 function getAllFiles(dirPath, arrayOfFiles = []) {
   const files = fs.readdirSync(dirPath);
 
   files.forEach(file => {
     const fullPath = path.join(dirPath, file);
     if (fs.statSync(fullPath).isDirectory()) {
-      arrayOfFiles = getAllFiles(fullPath, arrayOfFiles);
+      // Exclude node_modules and .git directories
+      if (file !== 'node_modules' && file !== '.git') {
+        arrayOfFiles = getAllFiles(fullPath, arrayOfFiles);
+      }
     } else {
       arrayOfFiles.push(fullPath);
     }
