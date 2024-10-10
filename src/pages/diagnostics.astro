@@ -81,9 +81,10 @@ async function fetchCommits() {
         })),
       }));
 
-      // Filter bot commits (You can customize the criteria)
+      // Filter bot commits by checking for 'bot' in the author's or committer's name
       botCommits = commitDiagnostics.filter(commit => 
-        commit.author.email.includes('noreply.github.com') || commit.author.name.toLowerCase().includes('bot')
+        commit.author.name.toLowerCase().includes('bot') || 
+        commit.committer.name.toLowerCase().includes('bot')
       );
     } else {
       console.error('GitHub API response is not an array:', commits);
@@ -97,7 +98,6 @@ async function fetchCommits() {
 await fetchCommits();
 ---
 
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -136,7 +136,7 @@ await fetchCommits();
                             <h5 class="card-title">{commit.message}</h5>
                             <p class="card-text"><strong>SHA:</strong> {commit.sha}</p>
                             <p class="card-text"><strong>Author:</strong> {commit.author.name} ({commit.author.email})</p>
-                            <p class="card-text"><strong>Committer:</strong> {commit.committer.name} ({commit.committer.email})</p>
+                            <p class="card-text"><strong>Committer:</strong> {commit.committer.name} ({commit.commit.committer.email})</p>
                             <p class="card-text"><strong>Date:</strong> {commit.author.date}</p>
                             <p class="card-text"><strong>Tree SHA:</strong> {commit.tree.sha}</p>
                             <p class="card-text"><strong>Verified:</strong> {commit.verified}</p>
@@ -156,19 +156,27 @@ await fetchCommits();
 
         <h2 class="mt-4">Bot Activity</h2>
         <div class="row">
-            {botCommits.map(commit => (
-                <div class="col-md-4 mb-3" key={commit.sha}>
-                    <div class="card">
-                        <img src={commit.author.avatar} alt={`${commit.author.name}'s avatar`} class="card-img-top" />
-                        <div class="card-body">
-                            <h5 class="card-title">{commit.message}</h5>
-                            <p class="card-text"><strong>SHA:</strong> {commit.sha}</p>
-                            <p class="card-text"><strong>Author:</strong> {commit.author.name} ({commit.author.email})</p>
-                            <p class="card-text"><strong>Date:</strong> {commit.author.date}</p>
+            {botCommits.length > 0 ? (
+                botCommits.map(commit => (
+                    <div class="col-md-4 mb-3" key={commit.sha}>
+                        <div class="card">
+                            <img src={commit.author.avatar} alt={`${commit.author.name}'s avatar`} class="card-img-top" />
+                            <div class="card-body">
+                                <h5 class="card-title">{commit.message}</h5>
+                                <p class="card-text"><strong>SHA:</strong> {commit.sha}</p>
+                                <p class="card-text"><strong>Author:</strong> {commit.author.name} ({commit.author.email})</p>
+                                <p class="card-text"><strong>Date:</strong> {commit.author.date}</p>
+                            </div>
                         </div>
                     </div>
+                ))
+            ) : (
+                <div class="col-12 mb-3">
+                    <div class="alert alert-info" role="alert">
+                        No bot commits were found.
+                    </div>
                 </div>
-            ))}
+            )}
         </div>
     </div>
 
