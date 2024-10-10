@@ -64,10 +64,15 @@ async function fetchCommits() {
           date: new Date(commit.commit.author.date).toLocaleString(),
           avatar: commit.author.avatar_url, // Add profile picture URL
         },
-        committer: {
+        // Check if committer exists, use a default object if not
+        committer: commit.commit.committer ? {
           name: commit.commit.committer.name,
           email: commit.commit.committer.email,
           date: new Date(commit.commit.committer.date).toLocaleString(),
+        } : {
+          name: 'Unknown',
+          email: 'Unknown',
+          date: 'Unknown',
         },
         message: commit.commit.message,
         tree: {
@@ -98,6 +103,7 @@ async function fetchCommits() {
 await fetchCommits();
 ---
 
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
