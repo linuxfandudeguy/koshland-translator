@@ -46,6 +46,7 @@ const fileDiagnostics = allFiles.map(file => ({
 }));
 
 let commitDiagnostics = [];
+let botCommits = [];
 
 async function fetchCommits() {
   try {
@@ -79,6 +80,11 @@ async function fetchCommits() {
           url: parent.html_url,
         })),
       }));
+
+      // Filter bot commits (You can customize the criteria)
+      botCommits = commitDiagnostics.filter(commit => 
+        commit.author.email.includes('noreply.github.com') || commit.author.name.toLowerCase().includes('bot')
+      );
     } else {
       console.error('GitHub API response is not an array:', commits);
     }
@@ -142,6 +148,23 @@ await fetchCommits();
                                     </li>
                                 ))}
                             </ul>
+                        </div>
+                    </div>
+                </div>
+            ))}
+        </div>
+
+        <h2 class="mt-4">Bot Activity</h2>
+        <div class="row">
+            {botCommits.map(commit => (
+                <div class="col-md-4 mb-3" key={commit.sha}>
+                    <div class="card">
+                        <img src={commit.author.avatar} alt={`${commit.author.name}'s avatar`} class="card-img-top" />
+                        <div class="card-body">
+                            <h5 class="card-title">{commit.message}</h5>
+                            <p class="card-text"><strong>SHA:</strong> {commit.sha}</p>
+                            <p class="card-text"><strong>Author:</strong> {commit.author.name} ({commit.author.email})</p>
+                            <p class="card-text"><strong>Date:</strong> {commit.author.date}</p>
                         </div>
                     </div>
                 </div>
