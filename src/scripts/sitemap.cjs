@@ -4,7 +4,7 @@
 const fs = require('fs');
 const path = require('path');
 const { URL } = require('url');
-const { site } = require('.../astro.config.mjs'); // Import the site URL from Astro config
+const { site } = require('../astro.config.mjs'); // Import the site URL from Astro config
 
 // Specify the directory to scan for HTML files (output directory after build)
 const directoryToScan = path.resolve('./dist'); // Adjust if necessary
