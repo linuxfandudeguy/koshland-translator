@@ -1,4 +1,6 @@
-// imports
+// 6:50 october 10 2024: set js file to commonjs by renaming sitemap.js to sitemap.cjs
+
+// imports 
 const fs = require('fs');
 const path = require('path');
 const { URL } = require('url');
