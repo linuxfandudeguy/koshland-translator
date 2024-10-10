@@ -45,110 +45,117 @@ const fileDiagnostics = allFiles.map(file => ({
   hash: calculateHash(file), // Get file's SHA-256 hash
 }));
 
-// Fetch GitHub commits (replace the API endpoint with the correct one)
-const response = await fetch('https://api.github.com/repos/{owner}/{repo}/commits'); // Replace {owner} and {repo} with your repo details
-const commits = await response.json();
-const commitDiagnostics = commits.map(commit => ({
-  sha: commit.sha,
-  message: commit.commit.message,
-  author: commit.commit.author.name,
-  authorEmail: commit.commit.author.email,
-  committer: commit.commit.committer.name,
-  committerEmail: commit.commit.committer.email,
-  commitDate: new Date(commit.commit.committer.date).toLocaleString(),
-  verified: commit.commit.verification.verified,
-  treeSha: commit.commit.tree.sha,
-  treeUrl: commit.commit.tree.url,
-  parentCommits: commit.parents.map(parent => ({
-    sha: parent.sha,
-    url: parent.html_url
-  }))
-}));
+let commitDiagnostics = [];
+
+try {
+  // Fetch GitHub commits (replace with the correct API endpoint)
+  const response = await fetch('https://koshland-trans-commit-gh-api.vercel.app/api/commits');
+  const commits = await response.json();
+
+  // Check if commits is an array before mapping
+  if (Array.isArray(commits)) {
+    commitDiagnostics = commits.map(commit => ({
+      sha: commit.sha,
+      url: commit.html_url,
+      author: {
+        name: commit.commit.author.name,
+        email: commit.commit.author.email,
+        date: new Date(commit.commit.author.date).toLocaleString()
+      },
+      committer: {
+        name: commit.commit.committer.name,
+        email: commit.commit.committer.email,
+        date: new Date(commit.commit.committer.date).toLocaleString()
+      },
+      message: commit.commit.message,
+      tree: {
+        sha: commit.commit.tree.sha,
+        url: commit.commit.tree.url
+      },
+      verified: commit.commit.verification.verified ? 'Yes' : 'No',
+      parentCommits: commit.parents.map(parent => ({
+        sha: parent.sha,
+        url: parent.html_url
+      }))
+    }));
+  } else {
+    console.error('GitHub API response is not an array:', commits);
+  }
+} catch (error) {
+  console.error('Error fetching GitHub commits:', error);
+}
 ---
 
+<!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Diagnostics page for Koshi Translator GitHub commits">
-    <meta name="keywords" content="Koshi, GitHub, commits, diagnostics">
-    <meta name="author" content="linuxfandudeguy">
-    <meta name="generator" content="Astro 4.15.11">
-    <meta name="theme-color" content="#ffffff">
-    <title>Koshi Translator Diagnostics</title>
-    <!-- Local Bootstrap 5.3.3 CSS with cache-busting -->
-    <link rel="stylesheet" href={`/bootstrap-5.3.3-dist/css/esbuild/bundled/bootstrap.bundle.min.css?t=${Date.now()}`} />
-    <style>
-      body {
-        background-color: white;
-      }
-      .card {
-        border: 1px solid #ccc;
-        padding: 20px;
-        margin-bottom: 20px;
-        border-radius: 10px;
-      }
-      .card-header {
-        font-weight: bold;
-        font-size: 1.2em;
-      }
-      .card-details {
-        font-size: 0.9em;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="container">
-      <div class="row justify-content-center">
-        <div class="col-md-8 mt-5 pt-5">
-          <h1 class="text-center font-weight-bold mb-4">Koshi Translator Diagnostics</h1>
+    <title>Diagnostics Page</title>
+</head>
+<body>
+    <h1>Diagnostics Information</h1>
 
-          <h2>File Diagnostics</h2>
-          <!-- Display file diagnostics -->
-          <div id="files">
+    <h2>Files</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Path</th>
+                <th>Size (bytes)</th>
+                <th>Last Modified</th>
+                <th>SHA-256 Hash</th>
+            </tr>
+        </thead>
+        <tbody>
             {fileDiagnostics.map(file => (
-              <div class="card">
-                <div class="card-header">
-                  File Name: {file.name}
-                </div>
-                <div class="card-details">
-                  <p><strong>Path:</strong> {file.path}</p>
-                  <p><strong>Size:</strong> {file.size} bytes</p>
-                  <p><strong>Last Modified:</strong> {file.modifiedDate}</p>
-                  <p><strong>Hash (SHA-256):</strong> {file.hash}</p>
-                </div>
-              </div>
+                <tr key={file.path}>
+                    <td>{file.name}</td>
+                    <td>{file.path}</td>
+                    <td>{file.size}</td>
+                    <td>{file.modifiedDate}</td>
+                    <td>{file.hash}</td>
+                </tr>
             ))}
-          </div>
+        </tbody>
+    </table>
 
-          <h2>GitHub Commits</h2>
-          <!-- Display commit diagnostics -->
-          <div id="commits">
+    <h2>GitHub Commits</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>SHA</th>
+                <th>URL</th>
+                <th>Author</th>
+                <th>Committer</th>
+                <th>Date</th>
+                <th>Message</th>
+                <th>Tree SHA</th>
+                <th>Verified</th>
+                <th>Parent Commits</th>
+            </tr>
+        </thead>
+        <tbody>
             {commitDiagnostics.map(commit => (
-              <div class="card">
-                <div class="card-header">
-                  Commit SHA: <a href="{commit.treeUrl}" target="_blank">{commit.sha}</a>
-                </div>
-                <div class="card-details">
-                  <p><strong>Message:</strong> {commit.message}</p>
-                  <p><strong>Author:</strong> {commit.author} ({commit.authorEmail})</p>
-                  <p><strong>Committer:</strong> {commit.committer} ({commit.committerEmail})</p>
-                  <p><strong>Commit Date:</strong> {commit.commitDate}</p>
-                  <p><strong>Verified:</strong> {commit.verified ? 'Yes' : 'No'}</p>
-                  <p><strong>Tree SHA:</strong> {commit.treeSha}</p>
-                  <p><strong>Parent Commits:</strong> {commit.parentCommits.map(parent => (
-                    <a href="{parent.url}" target="_blank">{parent.sha}</a>
-                  )).join(', ')}</p>
-                </div>
-              </div>
+                <tr key={commit.sha}>
+                    <td>{commit.sha}</td>
+                    <td><a href={commit.url} target="_blank">View Commit</a></td>
+                    <td>{commit.author.name} ({commit.author.email})</td>
+                    <td>{commit.committer.name} ({commit.committer.email})</td>
+                    <td>{commit.author.date}</td>
+                    <td>{commit.message}</td>
+                    <td>{commit.tree.sha}</td>
+                    <td>{commit.verified}</td>
+                    <td>
+                        {commit.parentCommits.map(parent => (
+                            <div key={parent.sha}>
+                                <a href={parent.url} target="_blank">{parent.sha}</a>
+                            </div>
+                        ))}
+                    </td>
+                </tr>
             ))}
-          </div>
-
-        </div>
-      </div>
-    </div>
-
-    <!-- Initial script with cache-busting -->
-    <script type="text/javascript" src={`/webpack/js/init/init.bundle.min.js?t=${Date.now()}`} defer></script>
-  </body>
+        </tbody>
+    </table>
+</body>
 </html>
