@@ -1,0 +1,134 @@
+---
+import fs from 'fs';
+import path from 'path';
+
+// Define the root directory of your repository
+const rootDir = path.resolve('.');
+
+// Function to get all files recursively from the root directory
+function getAllFiles(dirPath, arrayOfFiles = []) {
+  const files = fs.readdirSync(dirPath);
+
+  files.forEach(file => {
+    const fullPath = path.join(dirPath, file);
+    if (fs.statSync(fullPath).isDirectory()) {
+      arrayOfFiles = getAllFiles(fullPath, arrayOfFiles);
+    } else {
+      arrayOfFiles.push(fullPath);
+    }
+  });
+
+  return arrayOfFiles;
+}
+
+// Get all files in the repository
+const allFiles = getAllFiles(rootDir);
+
+// Generate diagnostics data for each file
+const fileDiagnostics = allFiles.map(file => ({
+  name: path.basename(file),
+  path: file,
+  size: fs.statSync(file).size, // Get file size in bytes
+  modifiedDate: fs.statSync(file).mtime.toLocaleString(), // Last modified date
+}));
+---
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Diagnostics page for Koshi Translator GitHub commits">
+    <meta name="keywords" content="Koshi, GitHub, commits, diagnostics">
+    <meta name="author" content="linuxfandudeguy">
+    <meta name="generator" content="Astro 4.15.11">
+    <meta name="theme-color" content="#ffffff">
+    <title>Koshi Translator Diagnostics</title>
+    <!-- Local Bootstrap 5.3.3 CSS with cache-busting -->
+    <link rel="stylesheet" href={`/bootstrap-5.3.3-dist/css/esbuild/bundled/bootstrap.bundle.min.css?t=${Date.now()}`} />
+    <style>
+      body {
+        background-color: white;
+      }
+      .card {
+        border: 1px solid #ccc;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 10px;
+      }
+      .card-header {
+        font-weight: bold;
+        font-size: 1.2em;
+      }
+      .card-details {
+        font-size: 0.9em;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-8 mt-5 pt-5">
+          <h1 class="text-center font-weight-bold mb-4">Koshi Translator Diagnostics</h1>
+
+          <h2>File Diagnostics</h2>
+          <!-- Display file diagnostics -->
+          <div id="files">
+            {fileDiagnostics.map(file => (
+              <div class="card">
+                <div class="card-header">
+                  File Name: {file.name}
+                </div>
+                <div class="card-details">
+                  <p><strong>Path:</strong> {file.path}</p>
+                  <p><strong>Size:</strong> {file.size} bytes</p>
+                  <p><strong>Last Modified:</strong> {file.modifiedDate}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <h2>GitHub Commits</h2>
+          <div id="commits"></div> <!-- Placeholder for commit data -->
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Initial script with cache-busting -->
+    <script type="text/javascript" src={`/webpack/js/init/init.bundle.min.js?t=${Date.now()}`} defer></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", async () => {
+        const commitContainer = document.getElementById('commits');
+        
+        try {
+          const response = await fetch('/api/commits'); // Replace with the correct API endpoint
+          const commits = await response.json();
+
+          commits.forEach(commit => {
+            const commitCard = document.createElement('div');
+            commitCard.classList.add('card');
+
+            commitCard.innerHTML = `
+              <div class="card-header">
+                Commit SHA: <a href="${commit.html_url}" target="_blank">${commit.sha}</a>
+              </div>
+              <div class="card-details">
+                <p><strong>Message:</strong> ${commit.commit.message}</p>
+                <p><strong>Author:</strong> ${commit.commit.author.name} (${commit.commit.author.email})</p>
+                <p><strong>Committer:</strong> ${commit.commit.committer.name} (${commit.commit.committer.email})</p>
+                <p><strong>Commit Date:</strong> ${new Date(commit.commit.committer.date).toLocaleString()}</p>
+                <p><strong>Verified:</strong> ${commit.commit.verification.verified ? 'Yes' : 'No'}</p>
+                <p><strong>Tree SHA:</strong> <a href="${commit.commit.tree.url}" target="_blank">${commit.commit.tree.sha}</a></p>
+                <p><strong>Parent Commits:</strong> ${commit.parents.map(parent => `<a href="${parent.html_url}" target="_blank">${parent.sha}</a>`).join(', ')}</p>
+              </div>
+            `;
+
+            commitContainer.appendChild(commitCard);
+          });
+        } catch (error) {
+          commitContainer.innerHTML = '<p>Error loading commits. Please try again later.</p>';
+        }
+      });
+    </script>
+  </body>
+</html>
