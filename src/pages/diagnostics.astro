@@ -33,6 +33,20 @@ function calculateHash(filePath) {
   return hashSum.digest('hex');
 }
 
+// Function to get Astro version
+function getAstroVersion() {
+  const packageJsonPath = path.join(rootDir, 'package.json');
+  const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'));
+  return packageJson.dependencies.astro || packageJson.devDependencies.astro || 'Unknown version';
+}
+
+// Function to read package-lock.json
+function getPackageLock() {
+  const packageLockPath = path.join(rootDir, 'package-lock.json');
+  const packageLock = fs.readFileSync(packageLockPath, 'utf8');
+  return packageLock;
+}
+
 // Get all files in the repository
 const allFiles = getAllFiles(rootDir);
 
@@ -44,10 +58,6 @@ const fileDiagnostics = allFiles.map(file => ({
   modifiedDate: fs.statSync(file).mtime.toLocaleString(), // Last modified date
   hash: calculateHash(file), // Get file's SHA-256 hash
 }));
-
-// Calculate total size and total number of files
-const totalSize = fileDiagnostics.reduce((acc, file) => acc + file.size, 0);
-const totalFiles = fileDiagnostics.length;
 
 let commitDiagnostics = [];
 let botCommits = [];
@@ -105,6 +115,11 @@ async function fetchCommits() {
 
 // Call the function to fetch commits
 await fetchCommits();
+
+// Get additional diagnostic information
+const astroVersion = getAstroVersion();
+const packageLockContent = getPackageLock();
+const vercelDeploymentCode = process.env.VERCEL_URL || 'Unknown';
 ---
 
 <html lang="en">
@@ -112,16 +127,17 @@ await fetchCommits();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Koshi Translator - Diagnostics</title>
-    <link rel="stylesheet" href={`/bootstrap-5.3.3-dist/css/esbuild/bundled/bootstrap.bundle.min.css?v=${Date.now()}`}>
+    <link rel="stylesheet" href="/bootstrap-5.3.3-dist/css/esbuild/bundled/bootstrap.bundle.min.css?v={Date.now}">
+    <link rel="stylesheet" href="/prism.min.css">
+    <script src="/prism.min.js"></script>
 </head>
 <body>
     <div class="container">
         <h1 class="mt-4">Koshi Translator - Diagnostics Information</h1>
 
-        <h2 class="mt-4">Website Status</h2>
-        <p><strong>Last Updated:</strong> {new Date().toLocaleString()}</p>
-        <p><strong>Total Files:</strong> {totalFiles}</p>
-        <p><strong>Total Size:</strong> {totalSize} bytes</p>
+        <h2 class="mt-4">Deployment Information</h2>
+        <p><strong>Vercel Deployment Code:</strong> {vercelDeploymentCode}</p>
+        <p><strong>Astro Version:</strong> {astroVersion}</p>
 
         <h2 class="mt-4">Files</h2>
         <div class="row">
@@ -192,8 +208,11 @@ await fetchCommits();
                 </div>
             )}
         </div>
+
+        <h2 class="mt-4">Package Lock Content</h2>
+        <pre><code class="language-json">{packageLockContent}</code></pre>
     </div>
 
-    <script src={`/bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js?v=${Date.now()}`} is:inline></script>
+    <script src="/bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js?v={Date.now}" is:inline></script>
 </body>
 </html>
