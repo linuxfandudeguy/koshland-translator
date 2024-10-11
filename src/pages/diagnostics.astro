@@ -127,8 +127,8 @@ const vercelDeploymentCode = process.env.VERCEL_URL || 'Unknown';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Koshi Translator - Diagnostics</title>
-    <link rel="stylesheet" href="/bootstrap-5.3.3-dist/css/esbuild/bundled/bootstrap.bundle.min.css?v={Date.now}">
-    <link rel="stylesheet" href="/prism.min.css">
+      <link rel="stylesheet" href={`/bootstrap-5.3.3-dist/css/esbuild/bundled/bootstrap.bundle.min.css?t=${Date.now()}`} />
+     <link rel="stylesheet" href="/prism.min.css">
     <script src="/prism.min.js" is:inline></script>
 </head>
 <body>
