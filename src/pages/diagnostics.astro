@@ -42,7 +42,7 @@ function getAstroVersion() {
 
 // Function to read package-lock.json
 function getPackageLock() {
-  const packageLockPath = path.join(rootDir, 'package-lock.json');
+  const packageLockPath = path.join(rootDir, 'pnpm-lock.yaml');
   const packageLock = fs.readFileSync(packageLockPath, 'utf8');
   return packageLock;
 }
